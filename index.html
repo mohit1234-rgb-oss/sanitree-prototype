@@ -1,364 +1,323 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sanitree - Herbal-Scientific Hand Sanitizer</title>
-    <style>
-        :root {
-            --primary-color: #0d9488; /* Medical Teal */
-            --secondary-color: #16a34a; /* Neem Green */
-            --bg-color: #f8fafc;
-            --text-color: #1e293b;
-            --card-bg: #ffffff;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0c766e">
+<meta name="description" content="Sanitree: a student-led herbal-scientific hand sanitizer prototype project at MIT Academy of Engineering, Alandi, Pune.">
+<title>Sanitree | Project &amp; Laboratory Documentation</title>
+<meta property="og:title" content="Sanitree: herbal-scientific hand sanitizer prototype">
+<meta property="og:description" content="Student prototype and lab documentation, MIT Academy of Engineering, Alandi, Pune.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌿%3C/text%3E%3C/svg%3E">
+<style>
+:root{
+ --ink:#152c2a;--muted:#607572;--teal:#0c766e;--teal-dark:#075e57;
+ --green:#2e8b57;--lime:#c8e9c6;--mint:#eaf7f1;--paper:#f5f8f6;
+ --white:#fff;--line:#dce8e2;--gold:#f2bd62;--danger:#9c4d30;
+ --shadow:0 18px 48px rgba(19,62,52,.09);--radius:22px;
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:92px}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.65}
+a{color:var(--teal)}button,input{font:inherit}button,a{ -webkit-tap-highlight-color:transparent}
+img{max-width:100%;display:block}
+.skip-link{position:absolute;left:-999px;top:8px;background:white;padding:12px;z-index:200}.skip-link:focus{left:8px}
+.topbar{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.93);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
+.nav-wrap{max-width:1180px;margin:auto;padding:0 22px;min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink);font-weight:850;letter-spacing:-.04em;font-size:1.28rem}
+.brand-mark{width:42px;height:42px;border-radius:15px;background:linear-gradient(135deg,var(--teal),var(--green));display:grid;place-items:center;color:white;font-size:1.35rem;box-shadow:0 7px 18px #0c766e30}
+.brand small{display:block;font-size:.65rem;letter-spacing:.08em;color:var(--muted);font-weight:700;text-transform:uppercase}
+.nav-links{display:flex;align-items:center;gap:18px}.nav-links a{text-decoration:none;color:#42605b;font-size:.88rem;font-weight:700}.nav-links a:hover{color:var(--teal)}
+.nav-actions{display:flex;align-items:center;gap:8px}.menu-toggle{display:none;border:1px solid var(--line);background:white;border-radius:12px;padding:9px 12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:13px;background:var(--teal);color:white;text-decoration:none;padding:12px 17px;font-weight:800;font-size:.92rem;cursor:pointer;transition:transform .2s,background .2s}
+.btn:hover{background:var(--teal-dark);transform:translateY(-2px)}.btn.secondary{background:white;color:var(--teal);border:1px solid var(--line)}.btn.secondary:hover{background:var(--mint)}.btn.small{padding:9px 12px;font-size:.82rem}
+.hero{position:relative;overflow:hidden;background:linear-gradient(125deg,#073f3b 0%,#0c766e 53%,#34865d 100%);color:white}
+.hero:before,.hero:after{content:"";position:absolute;border-radius:50%;border:1px solid #ffffff24;pointer-events:none}.hero:before{width:540px;height:540px;right:-130px;top:-190px;box-shadow:0 0 0 45px #ffffff08,0 0 0 95px #ffffff06}.hero:after{width:250px;height:250px;right:17%;bottom:-190px}
+.hero-inner{max-width:1180px;margin:auto;padding:88px 22px 78px;display:grid;grid-template-columns:1.12fr .88fr;gap:45px;align-items:center;position:relative;z-index:1}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;border:1px solid #ffffff48;background:#ffffff12;padding:7px 12px;border-radius:100px;text-transform:uppercase;font-size:.72rem;font-weight:850;letter-spacing:.1em}
+.dot{width:8px;height:8px;background:#b5f0c3;border-radius:50%;box-shadow:0 0 0 4px #b5f0c322}
+.hero h1{font-size:clamp(3.4rem,8vw,6.4rem);letter-spacing:-.075em;line-height:.95;margin:24px 0 20px}.hero h1 span{color:#c8e9c6}
+.hero-copy{font-size:1.14rem;color:#e0f4ed;max-width:630px;margin:0 0 27px}.hero-buttons{display:flex;flex-wrap:wrap;gap:10px}.hero .btn{background:white;color:var(--teal-dark)}.hero .btn.secondary{background:#ffffff12;border-color:#ffffff4a;color:white}
+.hero-meta{display:flex;flex-wrap:wrap;gap:15px;margin-top:32px;color:#d2eee4;font-size:.83rem}.hero-meta span{display:flex;align-items:center;gap:7px}
+.hero-art{min-height:355px;display:grid;place-items:center;position:relative}
+.product-orb{width:min(330px,80vw);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 35% 25%,#d4f3d0,#7bc9a0 42%,#176e62 75%);display:grid;place-items:center;box-shadow:inset -25px -25px 55px #03473b65,0 30px 75px #002f2b55;position:relative}
+.bottle{width:130px;height:220px;border-radius:26px 26px 35px 35px;background:linear-gradient(90deg,#d9f1e8,#fff 38%,#c0e5d8);box-shadow:15px 20px 25px #073e3540;position:relative;transform:rotate(-7deg);display:flex;align-items:center;justify-content:center;color:var(--teal-dark);text-align:center;padding:18px;border:1px solid #ffffffb0}
+.bottle:before{content:"";position:absolute;width:55px;height:38px;top:-34px;left:37px;border-radius:9px 9px 3px 3px;background:linear-gradient(90deg,#d7e5df,#fff,#b5d5c9)}
+.bottle:after{content:"";position:absolute;width:24px;height:14px;top:-46px;left:52px;border-radius:4px 4px 0 0;background:#f4f8f6}
+.bottle-label{font-weight:900;letter-spacing:-.05em;font-size:1.55rem;line-height:1.05}.bottle-label small{display:block;font-size:.53rem;letter-spacing:.12em;margin-top:10px;line-height:1.5}
+.float-card{position:absolute;background:#ffffffed;color:var(--ink);border:1px solid #ffffffb0;border-radius:16px;padding:13px 15px;box-shadow:var(--shadow);font-size:.82rem;font-weight:750}.float-card b{display:block;color:var(--teal);font-size:1rem}.float-one{top:28px;left:0}.float-two{right:-4px;bottom:25px}
+.section{max-width:1180px;margin:0 auto;padding:82px 22px}.section.compact{padding-top:54px;padding-bottom:54px}
+.section-head{max-width:760px;margin:0 auto 38px;text-align:center}.kicker{color:var(--teal);font-size:.74rem;text-transform:uppercase;letter-spacing:.14em;font-weight:900}.section h2{font-size:clamp(2rem,4vw,3.15rem);line-height:1.1;letter-spacing:-.055em;margin:10px 0 14px}.section-head p{color:var(--muted);margin:0;font-size:1.02rem}
+.grid{display:grid;gap:18px}.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}.grid-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.card{background:white;border:1px solid var(--line);border-radius:var(--radius);padding:25px;box-shadow:0 7px 25px #163d3210}.card h3{margin:9px 0 8px;font-size:1.12rem;letter-spacing:-.025em}.card p{color:var(--muted);margin:0}.icon-box{width:46px;height:46px;border-radius:15px;background:var(--mint);display:grid;place-items:center;font-size:1.35rem}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:-27px;position:relative;z-index:3}.stat{background:white;border:1px solid var(--line);border-radius:17px;padding:19px;box-shadow:var(--shadow)}.stat strong{display:block;font-size:1.5rem;letter-spacing:-.05em;color:var(--teal)}.stat span{font-size:.78rem;color:var(--muted);font-weight:700}
+.soft{background:#eaf4ef}.callout{padding:20px 22px;border-radius:17px;background:#fff7e8;border:1px solid #f0d9a9;color:#634b1f}.callout strong{display:block;margin-bottom:5px}.notice{border-left:4px solid var(--teal);padding:16px 18px;background:var(--mint);border-radius:0 13px 13px 0;color:#31564f}
+.pill{display:inline-flex;padding:5px 10px;border-radius:100px;background:var(--mint);color:var(--teal-dark);font-size:.72rem;font-weight:850;letter-spacing:.02em}
+.timeline{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:13px}.timeline:before{content:"";height:2px;background:#b8d9cb;position:absolute;top:23px;left:8%;right:8%}.step{position:relative;padding-top:50px}.step-num{position:absolute;top:0;left:0;width:46px;height:46px;display:grid;place-items:center;border-radius:50%;background:var(--teal);color:white;font-weight:900;border:5px solid var(--paper);box-sizing:content-box}.step h3{font-size:1rem;margin:8px 0}.step p{font-size:.86rem;color:var(--muted);margin:0}
+.formula-wrap{overflow:auto;border:1px solid var(--line);border-radius:16px;background:white}.formula-table{width:100%;border-collapse:collapse;min-width:490px}.formula-table th,.formula-table td{padding:14px 17px;text-align:left;border-bottom:1px solid var(--line)}.formula-table th{background:#edf7f1;color:#355c53;font-size:.79rem;text-transform:uppercase;letter-spacing:.06em}.formula-table td:last-child,.formula-table th:last-child{text-align:right}.formula-table tr:last-child td{border-bottom:0}
+.ingredient{padding:0;overflow:hidden}.ingredient summary{cursor:pointer;list-style:none;padding:22px;display:flex;gap:14px;align-items:center}.ingredient summary::-webkit-details-marker{display:none}.ingredient summary:after{content:"+";margin-left:auto;color:var(--teal);font-size:1.4rem;font-weight:600}.ingredient[open] summary:after{content:"−"}.ingredient-body{padding:0 22px 22px;color:var(--muted)}.ingredient-body p{margin:0 0 10px}
+.tabs{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-bottom:22px}.tab{border:1px solid var(--line);background:white;border-radius:100px;padding:10px 15px;font-weight:800;color:var(--muted);cursor:pointer}.tab.active,.tab[aria-selected="true"]{background:var(--teal);color:white;border-color:var(--teal)}
+.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.gallery-item{position:relative;border:0;padding:0;overflow:hidden;cursor:pointer;border-radius:18px;background:#dbe9e1;min-height:200px;text-align:left}.gallery-item img{width:100%;height:240px;object-fit:cover;transition:transform .35s}.gallery-item:hover img{transform:scale(1.045)}.gallery-caption{position:absolute;left:0;right:0;bottom:0;padding:30px 15px 14px;color:white;background:linear-gradient(transparent,#082f29d9);font-weight:800;font-size:.9rem}.image-fallback{height:240px;display:grid;place-items:center;padding:18px;text-align:center;color:#55766b;background:linear-gradient(135deg,#d6e9de,#f4f8f5);font-weight:750}
+.video-card{display:flex;flex-direction:column;gap:14px}.video-icon{font-size:2rem}.video-card .btn{align-self:flex-start;margin-top:auto}
+.result-row{display:grid;grid-template-columns:1fr 1fr;gap:18px}.result-panel{background:white;border:1px solid var(--line);border-radius:20px;padding:24px}.result-panel h3{margin-top:0}.checkline{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid #edf2ef;color:var(--muted)}.checkline:last-child{border-bottom:0}.checkline input{margin-top:6px;accent-color:var(--teal);width:17px;height:17px;flex-shrink:0}
+.team-card{text-align:center}.avatar{height:82px;width:82px;margin:0 auto 15px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,var(--teal),var(--green));color:white;font-size:1.7rem;font-weight:900;box-shadow:0 8px 20px #0c766e25}.team-card h3{margin-bottom:3px}.team-card .role{font-size:.8rem;color:var(--teal);font-weight:800}.team-card p{font-size:.87rem}
+.faq-list{max-width:850px;margin:auto;display:grid;gap:10px}.faq-item{background:white;border:1px solid var(--line);border-radius:15px;overflow:hidden}.faq-item summary{cursor:pointer;padding:18px 20px;font-weight:850;list-style:none;display:flex;gap:12px;align-items:center}.faq-item summary::-webkit-details-marker{display:none}.faq-item summary:after{content:"+";margin-left:auto;color:var(--teal);font-size:1.3rem}.faq-item[open] summary:after{content:"−"}.faq-answer{padding:0 20px 18px;color:var(--muted)}
+.sources-list li{margin:9px 0;color:var(--muted)}.sources-list a{overflow-wrap:anywhere}
+.footer{background:#092f2b;color:#d7eae3;padding:55px 22px 25px}.footer-inner{max-width:1180px;margin:auto;display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:35px}.footer h3,.footer h4{color:white;margin-top:0}.footer p,.footer a{color:#b7d2c8;font-size:.9rem}.footer a{display:block;margin:7px 0;text-decoration:none}.footer a:hover{color:white}.footer-bottom{max-width:1180px;margin:30px auto 0;border-top:1px solid #ffffff24;padding-top:18px;font-size:.8rem;color:#9cbdb1;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.modal{position:fixed;inset:0;z-index:100;background:#041f1ddf;display:none;align-items:center;justify-content:center;padding:22px}.modal.open{display:flex}.modal-content{max-width:900px;width:100%;position:relative;background:#fff;border-radius:20px;overflow:hidden}.modal-content img{max-height:72vh;width:100%;object-fit:contain;background:#e9f0eb}.modal-caption{padding:15px 20px;color:var(--ink);font-weight:800}.modal-close{position:absolute;right:12px;top:12px;background:white;border:0;border-radius:50%;width:42px;height:42px;font-size:1.3rem;cursor:pointer;box-shadow:0 5px 15px #0002}
+.back-top{position:fixed;right:18px;bottom:18px;z-index:30;width:46px;height:46px;border:0;border-radius:15px;background:var(--teal);color:white;font-size:1.2rem;box-shadow:var(--shadow);cursor:pointer;display:none}.back-top.show{display:block}
+.progress-bar{position:fixed;top:0;left:0;z-index:80;height:3px;width:0;background:var(--gold)}
+.small-note{font-size:.82rem;color:var(--muted)}.mt{margin-top:24px}.center{text-align:center}.hidden{display:none!important}
+@media(max-width:900px){.nav-links{gap:10px}.nav-links a{font-size:.8rem}.hero-inner{grid-template-columns:1fr .7fr;gap:20px}.hero-art{transform:scale(.9)}.grid-4{grid-template-columns:repeat(2,1fr)}.timeline{grid-template-columns:repeat(3,1fr)}.timeline:before{display:none}}
+@media(max-width:700px){.nav-wrap{min-height:68px}.menu-toggle{display:block}.nav-actions .btn{display:none}.nav-links{display:none;position:absolute;top:68px;left:0;right:0;background:white;padding:15px 22px 22px;border-bottom:1px solid var(--line);box-shadow:var(--shadow);flex-direction:column;align-items:stretch}.nav-links.open{display:flex}.nav-links a{padding:9px 0;font-size:.95rem}.hero-inner{grid-template-columns:1fr;padding-top:58px;padding-bottom:65px}.hero h1{font-size:clamp(3.5rem,17vw,5.5rem)}.hero-art{min-height:270px;transform:none}.product-orb{width:250px}.bottle{transform:scale(.82) rotate(-7deg)}.float-one{left:2px;top:12px}.float-two{right:0;bottom:5px}.section{padding:60px 18px}.section.compact{padding:42px 18px}.stats{grid-template-columns:repeat(2,1fr);margin-top:-18px}.grid-2,.grid-3{grid-template-columns:1fr}.gallery{grid-template-columns:repeat(2,minmax(0,1fr))}.gallery-item img,.image-fallback{height:190px}.result-row{grid-template-columns:1fr}.timeline{grid-template-columns:1fr 1fr;gap:22px}.step{padding-top:45px}.footer-inner{grid-template-columns:1fr;gap:20px}}
+@media(max-width:420px){.gallery{grid-template-columns:1fr}.gallery-item img,.image-fallback{height:230px}.timeline{grid-template-columns:1fr}.hero-meta{flex-direction:column;gap:7px}.grid-4{grid-template-columns:1fr}.brand{font-size:1.1rem}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+@media print{.topbar,.hero-buttons,.tabs,.back-top,.modal,.btn,.progress-bar{display:none!important}body{background:white}.hero{background:#0c766e!important;print-color-adjust:exact}.hero-inner{padding:35px 20px;grid-template-columns:1fr}.hero-art{display:none}.section{padding:25px 10px;break-inside:avoid}.card{box-shadow:none;break-inside:avoid}.footer{background:white;color:#222;padding:20px}.footer a,.footer p{color:#333}}
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+/* Cross-device layout hardening: wide desktops, compact laptops, tablets and phones */
+html, body { width:100%; max-width:100%; overflow-x:clip; }
+body { min-width:320px; }
+main, header, footer, section, nav, article, aside, .section, .hero-inner, .nav-wrap, .footer-inner { min-width:0; }
+button, a, p, li, h1, h2, h3, h4, td, th, summary { overflow-wrap:anywhere; }
+.hero-inner > *, .grid > *, .result-row > *, .footer-inner > *, .timeline > * { min-width:0; }
+.hero-art { transform:none; }
+.product-orb { width:min(330px, 100%); }
+.gallery-item, .gallery-item img { max-width:100%; }
+video, iframe, canvas, svg { max-width:100%; }
+@media (min-width: 1400px) {
+  .nav-wrap, .hero-inner, .section, .footer-inner, .footer-bottom { max-width:1280px; }
+  .hero-inner { gap:64px; padding-top:100px; padding-bottom:90px; }
+}
+/* Use a compact menu before desktop navigation becomes cramped on 13–14 inch laptops. */
+@media (min-width:701px) and (max-width:1100px) {
+  .nav-wrap { gap:12px; padding-left:18px; padding-right:18px; }
+  .menu-toggle { display:block; flex-shrink:0; }
+  .nav-actions .btn { display:none; }
+  .nav-links { display:none; position:absolute; top:76px; left:0; right:0; z-index:55; background:#fff; padding:16px 22px 22px; border-bottom:1px solid var(--line); box-shadow:var(--shadow); flex-direction:column; align-items:stretch; gap:2px; }
+  .nav-links.open { display:flex; }
+  .nav-links a { padding:10px 0; font-size:.95rem; }
+  .hero-inner { grid-template-columns:minmax(0,1.1fr) minmax(240px,.9fr); gap:24px; padding-top:68px; padding-bottom:62px; }
+  .hero h1 { font-size:clamp(3.2rem,6vw,5.2rem); }
+  .float-one { left:-6px; }
+  .float-two { right:-6px; }
+  .grid-3 { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .gallery { grid-template-columns:repeat(3,minmax(0,1fr)); }
+}
+@media (max-width:700px) {
+  .hero-inner { grid-template-columns:minmax(0,1fr); }
+  .hero-copy { font-size:1rem; }
+  .grid-2, .grid-3, .grid-4, .result-row, .footer-inner { grid-template-columns:minmax(0,1fr); }
+  .stats { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .gallery { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .formula-wrap { max-width:100%; }
+  .formula-table { min-width:520px; }
+}
+@media (max-width:420px) {
+  .nav-wrap { padding-left:14px; padding-right:14px; }
+  .hero-inner { padding-left:18px; padding-right:18px; }
+  .hero h1 { font-size:clamp(2.8rem,14vw,4rem); }
+  .float-card { max-width:145px; font-size:.72rem; padding:10px; }
+  .gallery { grid-template-columns:minmax(0,1fr); }
+  .stats { gap:8px; }
+  .stat { padding:14px; }
+}
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
-        }
 
-        header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            text-align: center;
-            padding: 4rem 2rem;
-        }
-
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .institute-badge {
-            margin-top: 1.5rem;
-            display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 0.6rem 1.2rem;
-            border-radius: 30px;
-            font-size: 0.95rem;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-
-        section {
-            margin-bottom: 4rem;
-        }
-
-        h2 {
-            color: var(--primary-color);
-            text-align: center;
-            margin-bottom: 2rem;
-            font-size: 2rem;
-        }
-
-        /* Video Links and Gallery Section */
-        .media-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2rem;
-        }
-
-        .video-links-card {
-            background: var(--card-bg);
-            padding: 2.5rem 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            border-left: 4px solid var(--primary-color);
-        }
-
-        .video-links-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: var(--text-color);
-        }
-
-        .btn {
-            display: inline-block;
-            background: var(--primary-color);
-            color: white;
-            padding: 0.8rem 1.5rem;
-            text-decoration: none;
-            border-radius: 8px;
-            margin-top: 1rem;
-            font-weight: 600;
-            text-align: center;
-            transition: background 0.3s ease, transform 0.2s ease;
-        }
-
-        .btn-secondary {
-            background: var(--secondary-color);
-        }
-
-        .btn:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
-        }
-
-        .photo-gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-
-        .gallery-img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            transition: transform 0.3s ease;
-        }
-
-        .gallery-img:hover {
-            transform: scale(1.03);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
-        }
-
-        /* Formulation Section */
-        .formula-card {
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-
-        .ingredients-list {
-            list-style: none;
-            margin-top: 1rem;
-        }
-
-        .ingredients-list li {
-            padding: 0.5rem 0;
-            border-bottom: 1px solid #e2e8f0;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        /* Transparency Cards */
-        .transparency-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .transparency-card {
-            background: var(--card-bg);
-            padding: 1.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            border-top: 4px solid var(--primary-color);
-        }
-
-        .transparency-card h3 {
-            color: var(--text-color);
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .safety-badge {
-            font-size: 0.75rem;
-            background: #e2e8f0;
-            padding: 0.2rem 0.6rem;
-            border-radius: 12px;
-            color: #475569;
-            font-weight: normal;
-        }
-
-        /* Team Section */
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .team-card {
-            background: var(--card-bg);
-            padding: 2rem;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-
-        .avatar {
-            width: 100px;
-            height: 100px;
-            background: var(--primary-color);
-            border-radius: 50%;
-            margin: 0 auto 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 2rem;
-            object-fit: cover;
-        }
-
-        footer {
-            text-align: center;
-            padding: 2rem;
-            background: #1e293b;
-            color: white;
-            margin-top: 2rem;
-        }
-
-        @media (min-width: 768px) {
-            .media-grid {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-    </style>
+/* Fixes: hidden attribute, stats gap, word breaking, status rows */
+[hidden]{display:none!important}
+.stats{margin-top:0}
+button,a,p,li,h1,h2,h3,h4,td,th,summary{overflow-wrap:break-word}
+.pill.planned{background:#fff7e8;color:#634b1f}
+.status-row{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;padding:12px 0;border-bottom:1px solid #edf2ef;color:var(--muted)}
+.status-row:last-of-type{border-bottom:0}.status-row b{color:var(--ink)}.status-row .pill{flex-shrink:0}
+</style>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="progress-bar" id="progressBar"></div>
+<header class="topbar">
+  <div class="nav-wrap">
+    <a class="brand" href="#home" aria-label="Sanitree home"><span class="brand-mark">✦</span><span>sanitree<small>student research prototype</small></span></a>
+    <nav class="nav-links" id="navLinks" aria-label="Main navigation">
+      <a href="#about">About</a><a href="#science">Science</a><a href="#method">Methodology</a><a href="#lab">Lab Gallery</a><a href="#validation">Validation</a><a href="#team">Team</a><a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-actions"><button class="btn secondary small" onclick="window.print()">Print / Save PDF</button><button class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="navLinks">☰ Menu</button></div>
+  </div>
+</header>
 
-    <header>
-        <h1>Sanitree Prototype</h1>
-        <p>A precision-formulated, laboratory-grade hand sanitizer infused with the natural antibacterial power of Neem leaves.</p>
-        <div class="institute-badge">
-            Proudly developed by students of <strong>MIT Academy of Engineering, Alandi, Pune</strong>
-        </div>
-    </header>
-
-    <div class="container">
-        
-        <!-- Video Links and Gallery Section -->
-        <section>
-            <h2>Behind the Scenes: The Making Of</h2>
-            <div class="media-grid">
-                
-                <!-- NEW: Video Links Card -->
-                <div class="video-links-card">
-                    <h3>Project Documentation Videos</h3>
-                    <p style="color: #475569; margin-bottom: 0.5rem;">Watch our complete laboratory process, from preparation to the final prototype.</p>
-                    
-                    <a href="https://drive.google.com/file/d/1BlspI4iDtNMV7Shgte67B0tvl-srE5Jm/view?usp=drivesdk" target="_blank" class="btn">▶ Watch Video Part 1</a>
-                    
-                    <a href="https://drive.google.com/file/d/1ioIK5ORUUMri8UxZ_KBSdYKualG-7nMh/view?usp=drivesdk" target="_blank" class="btn btn-secondary">▶ Watch Video Part 2</a>
-                </div>
-
-                <!-- Lab Photos -->
-                <div class="photo-gallery">
-                    <img src="14002.jpg" alt="Measuring Ingredients" class="gallery-img" title="Accurate Measurement">
-                    <img src="14000.jpg" alt="Mixing Solution" class="gallery-img" title="Careful Blending">
-                    <img src="14011.jpg" alt="Working with Neem Leaves" class="gallery-img" title="Neem Infusion Process">
-                    <img src="Cloudy Beaker Views in the Lab.png" alt="Final Cloudy Prototype" class="gallery-img" title="The Final Prototype">
-                </div>
-            </div>
-        </section>
-
-        <!-- Science & Formulation Section -->
-        <section>
-            <h2>Standard Operating Procedure</h2>
-            <div class="formula-card">
-                <h3>Core Ingredients (Final Volume: 100ml)</h3>
-                <ul class="ingredients-list">
-                    <li><span>Ethanol (95%)</span> <span>83.3 ml</span></li>
-                    <li><span>Hydrogen Peroxide (3%)</span> <span>4.17 ml</span></li>
-                    <li><span>Glycerol (98%)</span> <span>1.45 ml</span></li>
-                    <li><span>Distilled Water</span> <span>Up to 100 ml</span></li>
-                </ul>
-
-                <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Process Flow</h3>
-                <ol style="margin-left: 1.5rem; color: #475569;">
-                    <li>Clean and disinfect the working area.</li>
-                    <li>Accurately measure the required quantities of each ingredient.</li>
-                    <li>Carefully mix the formulation in a laboratory beaker.</li>
-                    <li>Infuse with fresh Neem leaves.</li>
-                    <li>Store safely for final settling.</li>
-                </ol>
-            </div>
-        </section>
-
-        <!-- Ingredient Transparency Section -->
-        <section>
-            <h2>Transparency & Safety: What's Inside?</h2>
-            <p style="text-align: center; margin-bottom: 2rem; color: #475569;">We believe you have the right to know exactly what you are putting on your skin. Here is why we chose each ingredient.</p>
-            
-            <div class="transparency-grid">
-                <div class="transparency-card">
-                    <h3>Ethanol (95%) <span class="safety-badge">Active Defense</span></h3>
-                    <p style="font-size: 0.9rem; color: #475569;"><strong>Why we use it:</strong> This is the core antimicrobial agent. At this exact concentration, it effectively destroys the cell walls of 99.9% of harmful bacteria and viruses.</p>
-                    <p style="font-size: 0.9rem; color: #475569; margin-top: 0.5rem;"><strong>Safety:</strong> Highly safe for external skin application, though it evaporates quickly.</p>
-                </div>
-
-                <div class="transparency-card">
-                    <h3>Hydrogen Peroxide (3%) <span class="safety-badge">Purifier</span></h3>
-                    <p style="font-size: 0.9rem; color: #475569;"><strong>Why we use it:</strong> It is not actually for your hands! It is used to inactivate contaminating bacterial spores that might be present in the solution or the beaker during the lab process.</p>
-                    <p style="font-size: 0.9rem; color: #475569; margin-top: 0.5rem;"><strong>Safety:</strong> Ensures the sanitizer you use is sterile and completely safe.</p>
-                </div>
-
-                <div class="transparency-card">
-                    <h3>Glycerol (98%) <span class="safety-badge">Skin Protector</span></h3>
-                    <p style="font-size: 0.9rem; color: #475569;"><strong>Why we use it:</strong> Pure alcohol can severely dry out human skin. Glycerol acts as a humectant—meaning it draws moisture into your skin, counteracting the drying effect of the ethanol.</p>
-                    <p style="font-size: 0.9rem; color: #475569; margin-top: 0.5rem;"><strong>Safety:</strong> Extremely safe, deeply hydrating, and gentle on sensitive skin.</p>
-                </div>
-
-                <div class="transparency-card" style="border-top-color: var(--secondary-color);">
-                    <h3>Neem Leaves (Azadirachta indica) <span class="safety-badge">Natural Booster</span></h3>
-                    <p style="font-size: 0.9rem; color: #475569;"><strong>Why we use it:</strong> Our unique herbal innovation. Neem adds natural anti-inflammatory and skin-soothing properties, reducing harshness while providing a secondary layer of botanical antimicrobial defense.</p>
-                    <p style="font-size: 0.9rem; color: #475569; margin-top: 0.5rem;"><strong>Safety:</strong> 100% natural, non-toxic, and traditionally used for skin health.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Team Section -->
-        <section>
-            <h2>Project Team</h2>
-            <div class="team-grid">
-                <!-- Member 1 -->
-                <div class="team-card">
-                    <div class="avatar">M</div>
-                    <h3>Mohitkumar Arvind Sinha</h3>
-                    <p style="color: #64748b; font-size: 0.9rem;">Project Member</p>
-                </div>
-                <!-- Member 2 -->
-                <div class="team-card">
-                    <div class="avatar">R</div>
-                    <h3>Rushikesh Borade</h3>
-                    <p style="color: #64748b; font-size: 0.9rem;">Project Member</p>
-                </div>
-                <!-- Member 3 -->
-                <div class="team-card">
-                    <div class="avatar">Y</div>
-                    <h3>Yash Shendurkar</h3>
-                    <p style="color: #64748b; font-size: 0.9rem;">Project Member</p>
-                </div>
-            </div>
-        </section>
-
+<main id="main">
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <div>
+      <div class="eyebrow"><span class="dot"></span> Student-led engineering project</div>
+      <h1>Sani<span>tree.</span></h1>
+      <p class="hero-copy">Exploring the intersection of hand-hygiene science and botanical ingredients through a student-developed sanitizer prototype.</p>
+      <div class="hero-buttons"><a class="btn" href="#about">Explore the project <span aria-hidden="true">↘</span></a><a class="btn secondary" href="#lab">View lab documentation ▶</a></div>
+      <div class="hero-meta"><span>⌂ MIT Academy of Engineering, Alandi, Pune</span><span>✧ Prototype and documentation showcase</span></div>
     </div>
+    <div class="hero-art" aria-label="Illustrative sanitizer bottle graphic">
+      <div class="product-orb"><div class="bottle"><div class="bottle-label">sani<br>tree<small>HERBAL-SCIENTIFIC<br>PROTOTYPE</small></div></div></div>
+      <div class="float-card float-one"><b>WHO-based</b>Formulation I, scaled to 100 ml</div>
+      <div class="float-card float-two"><b>5 neem leaves</b>Control batch needed</div>
+    </div>
+  </div>
+</section>
 
-    <footer>
-        <p>A Collaborative Engineering Project</p>
-        <p style="font-size: 0.8rem; margin-top: 0.5rem; opacity: 0.7;">MIT Academy of Engineering, Alandi, Pune</p>
-    </footer>
+<div class="section compact">
+  <div class="stats">
+    <div class="stat"><strong>4</strong><span>Base ingredients (WHO-based)</span></div>
+    <div class="stat"><strong>5</strong><span>Neem leaves in the prototype</span></div>
+    <div class="stat"><strong>5</strong><span>Lab photos</span></div>
+    <div class="stat"><strong>2</strong><span>Process videos</span></div>
+  </div>
+</div>
 
+<section class="section" id="about">
+  <div class="section-head"><span class="kicker">01 / The project</span><h2>From an idea to a documented prototype.</h2><p>Sanitree is a student project exploring a conventional alcohol-based sanitizer formulation alongside the proposed addition of neem leaves. This website records the project rationale, process documentation, and work still needed to evaluate the prototype responsibly.</p></div>
+  <div class="grid grid-3">
+    <article class="card"><div class="icon-box">◎</div><h3>The problem space</h3><p>Hand hygiene relies on products with reliable performance and clear usage guidance. A botanical addition introduces a research question: can it be incorporated without compromising formulation quality or safety?</p></article>
+    <article class="card"><div class="icon-box">✦</div><h3>Our approach</h3><p>Document the base formulation, laboratory process, observations, and potential role of neem. Treat each benefit as a hypothesis until supported by appropriate testing.</p></article>
+    <article class="card"><div class="icon-box">⌁</div><h3>Project objectives</h3><p>Practice formulation documentation, understand ingredient functions, record prototype observations, identify validation needs, and communicate the work clearly during faculty evaluation.</p></article>
+  </div>
+  <div class="notice mt"><strong>Project status:</strong> This page describes a student prototype, not a certified or commercially validated product. No laboratory efficacy, stability, sterility, or skin-safety results are available yet.</div>
+</section>
+
+<section class="section soft" id="science">
+  <div class="section-head"><span class="kicker">02 / Scientific background</span><h2>Know what each ingredient is meant to do.</h2><p>Open each card to read the intended role and the questions that should be addressed before making performance claims.</p></div>
+  <div class="grid grid-2">
+    <details class="card ingredient" open><summary><div class="icon-box">◉</div><div><h3>Ethanol</h3><span class="pill">Primary antimicrobial ingredient</span></div></summary><div class="ingredient-body"><p>Ethanol is commonly used as the active antimicrobial ingredient in alcohol-based hand rubs. Its effectiveness depends on the final alcohol concentration, formulation, contact conditions, and correct use.</p><p><b>Validation question:</b> Has the alcohol concentration in the finished prototype been measured using an appropriate method?</p></div></details>
+    <details class="card ingredient"><summary><div class="icon-box">💧</div><div><h3>Glycerol</h3><span class="pill">Humectant</span></div></summary><div class="ingredient-body"><p>Glycerol is a humectant that helps retain moisture and is used in some hand-rub formulations to help limit drying. Its amount can influence feel and product properties.</p><p><b>Validation question:</b> Is the final formula consistent and acceptable in use?</p></div></details>
+    <details class="card ingredient"><summary><div class="icon-box">◇</div><div><h3>Hydrogen peroxide</h3><span class="pill">Formulation component</span></div></summary><div class="ingredient-body"><p>In the referenced WHO handrub formulations, hydrogen peroxide has a specific role in addressing contaminating spores in the bulk solution; it is not the primary hand antiseptic active ingredient.</p><p><b>Validation question:</b> Does the preparation follow an applicable, verified formulation and controlled procedure?</p></div></details>
+    <details class="card ingredient"><summary><div class="icon-box">❧</div><div><h3>Neem leaves</h3><span class="pill">Botanical research component</span></div></summary><div class="ingredient-body"><p>Neem (<i>Azadirachta indica</i>) is the botanical component proposed by this project. The composition of a leaf infusion can vary with plant material and preparation, so its effect on the finished formulation cannot be assumed.</p><p>Five neem leaves were used in this prototype. WHO guidance asks that any additive be clearly labelled and non-toxic if swallowed by accident, and advises against perfumes and dyes because of allergy risk.</p><p><b>Validation question:</b> Does adding neem affect alcohol concentration, clarity, stability, contamination risk, skin compatibility, or measured antimicrobial performance?</p></div></details>
+  </div>
+  <div class="callout mt"><strong>Scientific communication rule</strong>Use phrases such as “proposed,” “under investigation,” and “not yet tested” when evidence is not available. Avoid claims such as “kills 99.9%,” “sterile,” “non-toxic,” or “safe for sensitive skin” unless the exact finished product has suitable evidence.</div>
+</section>
+
+<section class="section" id="method">
+  <div class="section-head"><span class="kicker">03 / Methodology</span><h2>Make the process easy to follow.</h2><p>The prototype followed this five-stage workflow, from preparation to observation.</p></div>
+  <div class="timeline">
+    <div class="step"><span class="step-num">01</span><h3>Preparation</h3><p>Document the work area, equipment, protective measures, and materials used.</p></div>
+    <div class="step"><span class="step-num">02</span><h3>Measurement</h3><p>Record the source, concentration, measured quantity, and equipment for each material.</p></div>
+    <div class="step"><span class="step-num">03</span><h3>Mixing</h3><p>Record the actual sequence followed, mixing conditions, and any deviations.</p></div>
+    <div class="step"><span class="step-num">04</span><h3>Neem addition</h3><p>Document plant-material preparation and how it was incorporated in the prototype.</p></div>
+    <div class="step"><span class="step-num">05</span><h3>Observation</h3><p>Log appearance, separation, odour, measured values, storage conditions, and test status.</p></div>
+  </div>
+  <div class="grid grid-2 mt">
+    <article class="card">
+      <h3>Base formulation (adapted from WHO Formulation I)</h3>
+      <p class="small-note">Scaled down by a factor of 10 from WHO Formulation I (1000 ml). WHO specifies 96% ethanol; 95% was used here. This is a documented student recipe, not a validated product, so confirm it with faculty before relying on it.</p>
+      <div class="formula-wrap mt"><table class="formula-table"><thead><tr><th>Ingredient</th><th>Recorded amount</th></tr></thead><tbody>
+      <tr><td>Ethanol (95%)</td><td>83.3 ml</td></tr><tr><td>Hydrogen peroxide (3%)</td><td>4.17 ml</td></tr><tr><td>Glycerol (98%)</td><td>1.45 ml</td></tr><tr><td>Distilled water</td><td>Up to 100 ml</td></tr><tr><td>Neem leaves (<i>Azadirachta indica</i>)</td><td>5 leaves</td></tr></tbody></table></div>
+      <p class="small-note mt">Calculated ethanol: 83.3 × 0.95 ÷ 100 ≈ 79% v/v before any dilution by the neem preparation (96% ethanol would give about 80%). The measured value is not yet available. Leaf size, condition (fresh or dry) and preparation method are not yet documented.</p>
+    </article>
+    <article class="card">
+      <h3>Prototype batch record</h3><div class="formula-wrap mt"><table class="formula-table"><thead><tr><th>Item</th><th>Record</th></tr></thead><tbody><tr><td>Batch</td><td>Prototype with neem</td></tr><tr><td>Neem leaves</td><td>5</td></tr><tr><td>Appearance</td><td>Cloudy</td></tr><tr><td>Ethanol measured</td><td>Not yet</td></tr><tr><td>Control batch (no neem)</td><td>Needed</td></tr></tbody></table></div><p class="small-note mt">A control batch without neem is needed to judge what neem changes.</p></article>
+  </div>
+  <div class="notice mt"><strong>Laboratory safety:</strong> Ethanol is flammable. Work only under faculty supervision, follow your institution's laboratory SOP and applicable guidance, and keep the material away from ignition sources. Do not distribute or apply an unvalidated prototype to people.</div>
+</section>
+
+<section class="section soft" id="lab">
+  <div class="section-head"><span class="kicker">04 / Behind the scenes</span><h2>Explore the laboratory documentation.</h2><p>Photos and two process videos documenting how the prototype was prepared.</p></div>
+  <div class="grid grid-2">
+    <article class="card video-card"><div class="video-icon">🎬</div><span class="pill">Process video · Part 1</span><h3>Laboratory process documentation</h3><p>Open the first video to show the documented project work and lab activities.</p><a class="btn" href="https://drive.google.com/file/d/1BlspI4iDtNMV7Shgte67B0tvl-srE5Jm/view?usp=drivesdk" target="_blank" rel="noopener noreferrer">Watch Part 1 ↗</a></article>
+    <article class="card video-card"><div class="video-icon">🎥</div><span class="pill">Process video · Part 2</span><h3>Continuation of the process</h3><p>Use the second video as a continuation of the project's behind-the-scenes record.</p><a class="btn" href="https://drive.google.com/file/d/1ioIK5ORUUMri8UxZ_KBSdYKualG-7nMh/view?usp=drivesdk" target="_blank" rel="noopener noreferrer">Watch Part 2 ↗</a></article>
+  </div>
+  <div class="tabs mt" role="tablist" aria-label="Gallery filters">
+    <button class="tab active" data-filter="all" role="tab" aria-selected="true">All photos</button>
+    <button class="tab" data-filter="process" role="tab" aria-selected="false">Process</button>
+    <button class="tab" data-filter="prototype" role="tab" aria-selected="false">Prototype</button>
+  </div>
+  <div class="gallery" id="gallery">
+    <button class="gallery-item" data-category="process" data-src="14002.jpg" data-caption="Measuring ingredients"><img src="14002.jpg" alt="Measuring ingredients" loading="lazy" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="image-fallback" hidden>Image not found: <b>14002.jpg</b></span><span class="gallery-caption">Measuring ingredients</span></button>
+    <button class="gallery-item" data-category="process" data-src="14000.jpg" data-caption="Mixing solution"><img src="14000.jpg" alt="Mixing solution" loading="lazy" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="image-fallback" hidden>Image file missing: <b>14000.jpg</b></span><span class="gallery-caption">Mixing solution</span></button>
+    <button class="gallery-item" data-category="process" data-src="14011.jpg" data-caption="Working with neem leaves"><img src="14011.jpg" alt="Working with neem leaves" loading="lazy" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="image-fallback" hidden>Image file missing: <b>14011.jpg</b></span><span class="gallery-caption">Neem leaves</span></button>
+    <button class="gallery-item" data-category="process" data-src="14006.jpg" data-caption="Pouring solution"><img src="14006.jpg" alt="Pouring solution" loading="lazy" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="image-fallback" hidden>Image file missing: <b>14006.jpg</b></span><span class="gallery-caption">Pouring solution</span></button>
+    <button class="gallery-item" data-category="prototype" data-src="Cloudy Beaker Views in the Lab.png" data-caption="Final cloudy prototype"><img src="Cloudy Beaker Views in the Lab.png" alt="Final cloudy prototype in a beaker" loading="lazy" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><span class="image-fallback" hidden>Image file missing: <b>Cloudy Beaker Views in the Lab.png</b></span><span class="gallery-caption">Prototype observation</span></button>
+      </div>
+  <p class="small-note center mt">Select a photo to enlarge it. Image captions describe the activity, not verified test outcomes.</p>
+</section>
+
+<section class="section" id="validation">
+  <div class="section-head"><span class="kicker">05 / Evidence & next steps</span><h2>Show what is known—and what remains to be tested.</h2><p>What has been observed so far, and what still needs to be tested.</p></div>
+  <div class="result-row">
+    <div class="result-panel"><h3>Validation roadmap</h3><p class="small-note">Status of each test needed before any performance claim.</p><div class="status-row"><div><b>Composition verification</b><br>Confirm the finished formulation and alcohol concentration with an appropriate method.</div><span class="pill planned">Not yet done</span></div><div class="status-row"><div><b>Control batch</b><br>Prepare the same formula without neem for comparison.</div><span class="pill planned">Not yet done</span></div><div class="status-row"><div><b>Physical stability</b><br>Document appearance, separation, and observations over a defined period.</div><span class="pill planned">Not yet done</span></div><div class="status-row"><div><b>Microbiological efficacy</b><br>Use a validated test through a qualified or supervised laboratory.</div><span class="pill planned">Not yet done</span></div><div class="status-row"><div><b>Skin compatibility</b><br>Assess through professional procedures before any human-use claim.</div><span class="pill planned">Not yet done</span></div></div>
+    <div class="result-panel"><h3>Results table template</h3><p class="small-note">Only observed results are listed; nothing has been estimated.</p>
+      <div class="formula-wrap mt"><table class="formula-table"><thead><tr><th>Parameter</th><th>Status</th></tr></thead><tbody>
+      <tr><td>Appearance / clarity</td><td><span class="pill">Cloudy (observed)</span></td></tr>
+      <tr><td>Alcohol concentration</td><td><span class="pill">Not yet measured</span></td></tr>
+      <tr><td>Stability observation</td><td><span class="pill">Not yet measured</span></td></tr>
+      <tr><td>Antimicrobial efficacy</td><td><span class="pill">Not yet measured</span></td></tr>
+      <tr><td>Skin compatibility</td><td><span class="pill">Not yet measured</span></td></tr>
+      </tbody></table></div>
+      <p class="small-note mt">Results will be added with the method, date, and sample ID.</p>
+    </div>
+  </div>
+  <div class="grid grid-3 mt">
+    <article class="card"><div class="icon-box">⚑</div><h3>Known limitation</h3><p>The prototype turned cloudy. Possible causes include plant material or water quality, but this has not been tested. Neem also varies between leaves, so the result needs repeating with a control batch.</p></article>
+    <article class="card"><div class="icon-box">↗</div><h3>Next iteration</h3><p>Review the prototype with faculty, define test methods and acceptance criteria, then document changes between batches.</p></article>
+    <article class="card"><div class="icon-box">♧</div><h3>Future scope</h3><p>Explore standardized botanical preparation, validated quality control, packaging usability, and sustainability only where feasible and evidence-based.</p></article>
+  </div>
+</section>
+
+<section class="section soft" id="team">
+  <div class="section-head"><span class="kicker">06 / People behind the project</span><h2>A collaborative engineering effort.</h2><p>The students behind the project.</p></div>
+  <div class="grid grid-3">
+    <article class="card team-card"><div class="avatar">M</div><h3>Mohitkumar Arvind Sinha</h3><div class="role">Project team member</div></article>
+    <article class="card team-card"><div class="avatar">R</div><h3>Rushikesh Borade</h3><div class="role">Project team member</div></article>
+    <article class="card team-card"><div class="avatar">Y</div><h3>Yash Shendurkar</h3><div class="role">Project team member</div></article>
+  </div>
+  <div class="card mt center"><div class="icon-box" style="margin:auto">⌂</div><h3>MIT Academy of Engineering</h3><p>Alandi, Pune · Collaborative engineering project</p></div>
+</section>
+
+<section class="section" id="faq">
+  <div class="section-head"><span class="kicker">07 / FAQ</span><h2>Questions visitors may ask.</h2><p>Short answers about the project, its limits, and next steps.</p></div>
+  <div class="faq-list">
+    <details class="faq-item"><summary>What is Sanitree?</summary><div class="faq-answer">Sanitree is a student-developed hand-sanitizer prototype project exploring a conventional alcohol-based formulation and a proposed neem botanical component. It is presented as a prototype, not a certified commercial product.</div></details>
+    <details class="faq-item"><summary>Why was neem selected?</summary><div class="faq-answer">Neem was selected as the botanical research component. Its inclusion raises questions that should be tested, including consistency, compatibility, stability, and any measurable effect on the finished formulation. Traditional use alone does not prove efficacy or safety in this product.</div></details>
+    <details class="faq-item"><summary>What does ethanol do?</summary><div class="faq-answer">Ethanol is the primary antimicrobial ingredient in many alcohol-based hand rubs. Performance depends on the actual final concentration and validated use conditions; a percentage claim should not be made without evidence for the finished product.</div></details>
+    <details class="faq-item"><summary>Why is glycerol included?</summary><div class="faq-answer">Glycerol acts as a humectant and can help limit the drying effect associated with alcohol-based formulations. The final amount and product properties still need to be checked.</div></details>
+    <details class="faq-item"><summary>Is the prototype proven to kill 99.9% of germs?</summary><div class="faq-answer">No. No efficacy test has been done yet, so this claim cannot be made. It would need suitable data for the exact finished formulation.</div></details>
+    <details class="faq-item"><summary>Is it ready for commercial use?</summary><div class="faq-answer">The website documents a student prototype. Commercial readiness would require appropriate formulation verification, quality control, stability and safety evaluation, efficacy evidence, compliant labelling, and review of applicable regulations.</div></details>
+    <details class="faq-item"><summary>Why is the prototype cloudy?</summary><div class="faq-answer">The cause has not been established. Plant material or water quality are possibilities. The next step is to repeat the batch with a filtered neem preparation, distilled water, and a control batch without neem.</div></details>
+    <details class="faq-item"><summary>What is the next step?</summary><div class="faq-answer">Agree on the formulation and validation plan with the faculty supervisor, record reproducible methods and batch details, complete appropriate tests, and update the website with actual results and limitations.</div></details>
+  </div>
+</section>
+
+<section class="section compact soft" id="resources">
+  <div class="section-head"><span class="kicker">08 / Resources</span><h2>References and project files.</h2><p>The reference used for the base formulation.</p></div>
+  <div class="grid grid-2">
+    <article class="card"><div class="icon-box">📘</div><h3>Scientific reference</h3><p>World Health Organization. <i>Guide to Local Production: WHO-recommended Handrub Formulations.</i> WHO/IER/PSP/2010.5 (2010).</p><p class="mt"><a href="https://www.who.int/gpsc/5may/Guide_to_Local_Production.pdf" target="_blank" rel="noopener noreferrer">Open WHO guide ↗</a> · <a href="https://www.who.int/publications/i/item/guide-to-local-production-who-recommended-handrub-formulations" target="_blank" rel="noopener noreferrer">WHO publication page ↗</a></p><p class="small-note">Use the guide to understand the referenced formulation context; do not assume it validates this neem-containing prototype.</p></article>
+    <article class="card"><div class="icon-box">📄</div><h3>Save a copy</h3><p>Print this page or save it as a PDF for the project file.</p><button class="btn secondary small mt" onclick="window.print()">Print / Save as PDF</button></article>
+  </div>
+</section>
+</main>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div><a class="brand" href="#home" style="color:white"><span class="brand-mark">✦</span><span>sanitree<small style="color:#b7d2c8">student research prototype</small></span></a><p>Documenting a student engineering project with a focus on transparency, scientific reasoning, and responsible validation.</p></div>
+    <div><h4>Explore</h4><a href="#about">About the project</a><a href="#science">Scientific background</a><a href="#method">Methodology</a><a href="#validation">Testing and limitations</a></div>
+    <div><h4>Institution</h4><p>MIT Academy of Engineering<br>Alandi, Pune</p><p>Student project showcase</p></div>
+  </div>
+  <div class="footer-bottom"><span>© Sanitree Student Project · Educational documentation</span><span>Prototype status: not certified for consumer use</span></div>
+</footer>
+
+<div class="modal" id="imageModal" role="dialog" aria-modal="true" aria-label="Expanded gallery image">
+  <div class="modal-content"><button class="modal-close" id="modalClose" aria-label="Close image">×</button><img id="modalImage" src="" alt=""><div class="modal-caption" id="modalCaption"></div></div>
+</div>
+<button class="back-top" id="backTop" aria-label="Back to top">↑</button>
+<script>
+const menuToggle=document.getElementById('menuToggle');
+const navLinks=document.getElementById('navLinks');
+menuToggle.addEventListener('click',()=>{const open=navLinks.classList.toggle('open');menuToggle.setAttribute('aria-expanded',String(open));menuToggle.textContent=open?'✕ Close':'☰ Menu';});
+navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{navLinks.classList.remove('open');menuToggle.setAttribute('aria-expanded','false');menuToggle.textContent='☰ Menu';}));
+document.querySelectorAll('.tab').forEach(tab=>tab.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(t=>{t.classList.remove('active');t.setAttribute('aria-selected','false')});tab.classList.add('active');tab.setAttribute('aria-selected','true');const filter=tab.dataset.filter;document.querySelectorAll('.gallery-item').forEach(item=>{item.classList.toggle('hidden',filter!=='all'&&item.dataset.category!==filter)});}));
+const modal=document.getElementById('imageModal'),modalImage=document.getElementById('modalImage'),modalCaption=document.getElementById('modalCaption');
+document.querySelectorAll('.gallery-item').forEach(item=>item.addEventListener('click',()=>{const img=item.querySelector('img');if(!img||img.hidden)return;lastFocus=item;document.body.style.overflow='hidden';modalImage.src=item.dataset.src;modalImage.alt=img.alt;modalCaption.textContent=item.dataset.caption;modal.classList.add('open');document.getElementById('modalClose').focus();}));
+let lastFocus=null;function closeModal(){modal.classList.remove('open');modalImage.removeAttribute('src');document.body.style.overflow='';if(lastFocus)lastFocus.focus();}
+document.getElementById('modalClose').addEventListener('click',closeModal);modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+const backTop=document.getElementById('backTop'),progress=document.getElementById('progressBar');
+window.addEventListener('scroll',()=>{const max=document.documentElement.scrollHeight-window.innerHeight;progress.style.width=(max>0?(window.scrollY/max*100):0)+'%';backTop.classList.toggle('show',window.scrollY>500)});
+backTop.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+window.addEventListener('beforeprint',()=>document.querySelectorAll('details').forEach(d=>d.open=true));
+</script>
 </body>
 </html>
