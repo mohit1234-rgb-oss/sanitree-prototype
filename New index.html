@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sanitree - Herbal-Scientific Hand Sanitizer</title>
+    <style>
+        :root {
+            --primary-color: #0d9488; /* Medical Teal */
+            --secondary-color: #16a34a; /* Neem Green */
+            --bg-color: #f8fafc;
+            --text-color: #1e293b;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .institute-badge {
+            margin-top: 1.5rem;
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.6rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        section {
+            margin-bottom: 4rem;
+        }
+
+        h2 {
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+
+        /* Video Links and Gallery Section */
+        .media-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .video-links-card {
+            background: var(--card-bg);
+            padding: 2.5rem 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .video-links-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            text-decoration: none;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-weight: 600;
+            text-align: center;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-secondary {
+            background: var(--secondary-color);
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+
+        /* Formulation Section */
+        .formula-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .ingredients-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .ingredients-list li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* Transparency Cards */
+        .transparency-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .transparency-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border-top: 4px solid var(--primary-color);
+        }
+
+        .transparency-card h3 {
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .safety-badge {
+            font-size: 0.75rem;
+            background: #e2e8f0;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            color: #475569;
+            font-weight: normal;
+        }
+
+        /* Team Section */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .team-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            object-fit: cover;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: #1e293b;
+            color: white;
+            margin-top: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .media-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Sanitree Prototype</h1>
+        <p>A precision-formulated, laboratory-grade hand sanitizer infused with the natural antibacterial power of Neem leaves.</p>
+        <div class="institute-badge">
+            Proudly developed by students of <strong>MIT Academy of Engineering, Alandi, Pune</strong>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <!-- Video Links and Gallery Section -->
+        <section>
+            <h2>Behind the Scenes: The Making Of</h2>
+            <div class="media-grid">
+                
+                <!-- NEW: Video Links Card -->
+                <div class="video-links-card">
+                    <h3>Project Documentation Videos</h3>
+                    <p style="color: #475569; margin-bottom: 0.5rem;">Watch our complete laboratory process, from preparation to the final prototype.</p>
+                    
+                    <a href="https://drive.google.com/file/d/1BlspI4iDtNMV7Shgte67B0tvl-srE5Jm/view?usp=drivesdk" target="_blank" class="btn">▶ Watch Video Part 1</a>
+                    
+                    <a href="https://drive.google.com/file/d/1ioIK5ORUUMri8UxZ_KBSdYKualG-7nMh/view?usp=drivesdk" target="_blank" class="btn btn-secondary">▶ Watch Video Part 2</a>
+                </div>
+
+                <!-- Lab Photos -->
+                <div class="photo-gallery">
+                    <img src="14002.jpg" alt="Measuring Ingredients" class="gallery-img" title="Accurate Measurement">
+                    <img src="14000.jpg" alt="Mixing Solution" class="gallery-img" title="Careful Blending">
+                    <img src="14011.jpg" alt="Working with Neem Leaves" class="gallery-img" title="Neem Infusion Process">
+                    <img src="Cloudy Beaker Views in the Lab.png" alt="Final Cloudy Prototype" class="gallery-img" title="The Final Prototype">
+                </div>
+            </div>
+        </section>
+
+        <!-- Science & Formulation Section -->
+        <section>
+            <h2>Standard Operating Procedure</h2>
+            <div class="formula-card">
+                <h3>Core Ingredients (Final Volume: 100ml)</h3>
+                <ul class="ingredients-list">
+                    <li><span>Ethanol (95%)</span> <span>83.3 ml</span></li>
+                    <li><span>Hydrogen Peroxide (3%)</span> <span>4.17 ml</span></li>
+                    <li><span>Glycerol (98%)</span> <span>1.45 ml</span></li>
+                    <li><span>Distilled Water</span> <span>Up to 100 ml</span></li>
+                </ul>
+
+                <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Process Flow</h3>
+                <ol style="margin-left: 1.5rem; color: #475569;">
+                    <li>Clean and disinfect the working area.</li>
+                    <li>Accurately measure the required quantities of each ingredient.</li>
+                    <li>Carefully mix the formulation in a laboratory beaker.</li>
+                    <li>Infuse with fresh Neem leaves.</li>
+                    <li>Store safely for final settling.</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Ingredient Transparency Section -->
+        <section>
+            <h2>Transparency & Safety: What's Inside?</h2>
+            <p style="text-align: center; margin-bottom: 2rem; color: #475569;">We believe you have the right to know exactly what you are putting on your skin. Here is why we chose each ingredient.</p>
+            
+            <div class="transparency-grid">
+                <div class="transparency-card">
+                    <h3>Ethanol (95%) <span class="safety-badge">Active Defense</span></h3>
+                    <p style="font-size: 0.9rem; color: #475569;"><strong>Why we use it:</strong> This is the core antimicrobial agent. At this exact concentration, it effectively destroys the cell walls of 99.9% of harmful bacteria and viruses.</p>
+                    <p style="font-size: 0.9rem; color: #475569; margin-top: 0.5rem;"><strong>Safety:</strong> Highly safe for external skin application, though it evaporates quickly.</p>
+                </div>
+
+                <div class="transparency-card">
+                    <h3>Hydrogen Peroxide (3%) <span class="safety-badge">Purifier</span></h3>
+                    <p style="font-size: 0.9rem; color: #475569;"><strong>Why we use it:</strong> It is not actually for your hands! It is used to inactivate contaminating bacterial spores that might be present in the solution or the beaker during the lab process.</p>
+                    <p style="font-size: 0.9rem; color: #475569; margin-top: 0.5rem;"><strong>Safety:</strong> Ensures the sanitizer you use is sterile and completely safe.</p>
+                </div>
+
+                <div class="transparency-card">
+                    <h3>Glycerol (98%) <span class="safety-badge">Skin Protector</span></h3>
+                    <p style="font-size: 0.9rem; color: #475569;"><strong>Why we use it:</strong> Pure alcohol can severely dry out human skin. Glycerol acts as a humectant—meaning it draws moisture into your skin, counteracting the drying effect of the ethanol.</p>
+                    <p style="font-size: 0.9rem; color: #475569; margin-top: 0.5rem;"><strong>Safety:</strong> Extremely safe, deeply hydrating, and gentle on sensitive skin.</p>
+                </div>
+
+                <div class="transparency-card" style="border-top-color: var(--secondary-color);">
+                    <h3>Neem Leaves (Azadirachta indica) <span class="safety-badge">Natural Booster</span></h3>
+                    <p style="font-size: 0.9rem; color: #475569;"><strong>Why we use it:</strong> Our unique herbal innovation. Neem adds natural anti-inflammatory and skin-soothing properties, reducing harshness while providing a secondary layer of botanical antimicrobial defense.</p>
+                    <p style="font-size: 0.9rem; color: #475569; margin-top: 0.5rem;"><strong>Safety:</strong> 100% natural, non-toxic, and traditionally used for skin health.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section>
+            <h2>Project Team</h2>
+            <div class="team-grid">
+                <!-- Member 1 -->
+                <div class="team-card">
+                    <div class="avatar">M</div>
+                    <h3>Mohitkumar Arvind Sinha</h3>
+                    <p style="color: #64748b; font-size: 0.9rem;">Project Member</p>
+                </div>
+                <!-- Member 2 -->
+                <div class="team-card">
+                    <div class="avatar">R</div>
+                    <h3>Rushikesh Borade</h3>
+                    <p style="color: #64748b; font-size: 0.9rem;">Project Member</p>
+                </div>
+                <!-- Member 3 -->
+                <div class="team-card">
+                    <div class="avatar">Y</div>
+                    <h3>Yash Shendurkar</h3>
+                    <p style="color: #64748b; font-size: 0.9rem;">Project Member</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        <p>A Collaborative Engineering Project</p>
+        <p style="font-size: 0.8rem; margin-top: 0.5rem; opacity: 0.7;">MIT Academy of Engineering, Alandi, Pune</p>
+    </footer>
+
+</body>
+</html>
